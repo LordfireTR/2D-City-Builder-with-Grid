@@ -1,19 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Grid<bool> grid;
     void Start()
     {
-        Grid grid = new Grid (10, 5, 10);
+        grid = new Grid<bool> (20, 10, 5, new Vector3(-50, -25, 0), () => new bool());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButton(0))
+        {
+            grid.SetValue(Camera.main.ScreenToWorldPoint(Input.mousePosition), true);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log(grid.GetValue(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        }
     }
 
     
