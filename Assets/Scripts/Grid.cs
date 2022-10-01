@@ -12,6 +12,8 @@ public class Grid<TGridObject>
     TGridObject[,] gridArray;
     TextMesh[,] debugGridArray;
 
+        bool showDebug = false;
+        
     public Grid (int width, int height, float cellSize, Vector3 originPosition, Func<TGridObject> createGridObject)
     {
         this.width = width;
@@ -29,7 +31,6 @@ public class Grid<TGridObject>
             }
         }
 
-        bool showDebug = true;
         if (showDebug)
         {
             debugGridArray = new TextMesh[width, height];
@@ -88,23 +89,26 @@ public class Grid<TGridObject>
     //     AddValue(x, y, value);
     // }
 
-    public void SetValue (int x, int y, TGridObject value)
+    public void SetGridObject (int x, int y, TGridObject value)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
             gridArray[x, y] = value;
-            debugGridArray[x, y].text = gridArray[x, y]?.ToString();
+            if (showDebug)
+            {
+                debugGridArray[x, y].text = gridArray[x, y]?.ToString();
+            }
         }
     }
 
-    public void SetValue (Vector3 worldPosition, TGridObject value)
+    public void SetGridObject (Vector3 worldPosition, TGridObject value)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
-        SetValue(x, y, value);
+        SetGridObject(x, y, value);
     }
 
-    public TGridObject GetValue (int x, int y)
+    public TGridObject GetGridObject (int x, int y)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -116,10 +120,10 @@ public class Grid<TGridObject>
         }
     }
 
-    public TGridObject GetValue(Vector3 worldPosition)
+    public TGridObject GetGridObject(Vector3 worldPosition)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
-        return GetValue(x, y);
+        return GetGridObject(x, y);
     }
 }

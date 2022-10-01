@@ -14,14 +14,14 @@ public class Testing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            grid.SetValue(Camera.main.ScreenToWorldPoint(Input.mousePosition), true);
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log(grid.GetValue(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-        }
+        // if (Input.GetMouseButton(0))
+        // {
+        //     grid.SetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition), true);
+        // }
+        // if (Input.GetMouseButtonDown(1))
+        // {
+        //     Debug.Log(grid.GetGridObject(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        // }
     }
 
     
