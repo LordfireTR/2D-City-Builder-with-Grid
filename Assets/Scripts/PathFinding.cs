@@ -68,13 +68,10 @@ public class PathFinding
                 {
                     continue;
                 }
-                if (neighbourNode != null)
+                if (!neighbourNode.isWalkable)
                 {
-                    Debug.Log("neighbour" + neighbourNode.x + "," + neighbourNode.y);
-                }
-                if (currentNode == null)
-                {
-                    Debug.Log("current");
+                    closedList.Add(neighbourNode);
+                    continue;
                 }
 
                 int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbourNode);
