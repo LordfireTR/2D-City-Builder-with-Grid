@@ -42,14 +42,14 @@ public class Testing_Mesh : MonoBehaviour
         mesh.triangles = triangles;
         GetComponent<MeshFilter>().mesh = mesh;
 
-        grid = new Grid<Mesh> (8, 4, 12.5f, new Vector3(-50, -25, 0), () => new Mesh());
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                grid.SetGridObject(i, j, mesh);
-            }
-        }
+        // grid = new Grid<Mesh> (8, 4, 12.5f, new Vector3(-50, -25, 0), () => new Mesh());
+        // for (int i = 0; i < 8; i++)
+        // {
+        //     for (int j = 0; j < 4; j++)
+        //     {
+        //         grid.SetGridObject(i, j, mesh);
+        //     }
+        // }
     }
 
     // Update is called once per frame
