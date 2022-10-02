@@ -26,5 +26,17 @@ public class Testing_PathFinding : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            pathfinding.GetGrid().GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y);
+            
+            List<PathNode> neighbours = pathfinding.GetNeighbourList(pathfinding.GetGrid().GetGridObject(x, y));
+
+            foreach (PathNode item in neighbours)
+            {
+                Debug.Log(item);
+            }
+        }
     }
 }
