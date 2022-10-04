@@ -16,7 +16,17 @@ public class PathFinding
     public PathFinding(int width, int height, Vector3 originPosition)
     {
         instance = this;
-        grid = new Grid<PathNode>(width, height, 1f, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        grid = new Grid<PathNode>(width, height, 5f, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < grid.GetHeight(); y++)
+            {
+                PathNode pathNode = grid.GetGridObject(x, y);
+                
+                pathNode.GetNeighbourList();
+            }
+        }
     }
 
     public Grid<PathNode> GetGrid()
@@ -42,7 +52,6 @@ public class PathFinding
             for (int y = 0; y < grid.GetHeight(); y++)
             {
                 PathNode pathNode = grid.GetGridObject(x, y);
-                pathNode.GetNeighbourList();
                 pathNode.gCost = int.MaxValue;
                 pathNode.CalculateFCost();
 

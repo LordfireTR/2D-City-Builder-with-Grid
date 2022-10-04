@@ -68,6 +68,7 @@ public class PathNode
         {
             neighbourList.Add(grid.GetGridObject(x, y - 1));
         }
+        //Debug.Log("Done for" + x + "," + y);
     }
 
     public void CalculateFCost()
