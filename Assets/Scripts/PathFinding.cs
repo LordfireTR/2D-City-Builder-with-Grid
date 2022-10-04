@@ -7,13 +7,16 @@ public class PathFinding
     const int MOVE_STRAIGHT_COST = 10;
     const int MOVE_DIAGONAL_COST = 14;
 
+    public static PathFinding instance { get; private set; }
+
     Grid<PathNode> grid;
     List<PathNode> openList;
     List<PathNode> closedList;
 
     public PathFinding(int width, int height, Vector3 originPosition)
     {
-        grid = new Grid<PathNode>(width, height, 5f, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        instance = this;
+        grid = new Grid<PathNode>(width, height, 1f, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
     }
 
     public Grid<PathNode> GetGrid()
@@ -39,6 +42,7 @@ public class PathFinding
             for (int y = 0; y < grid.GetHeight(); y++)
             {
                 PathNode pathNode = grid.GetGridObject(x, y);
+                pathNode.GetNeighbourList();
                 pathNode.gCost = int.MaxValue;
                 pathNode.CalculateFCost();
 
@@ -62,8 +66,13 @@ public class PathFinding
             closedList.Add(currentNode);
 
 
-            foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
+            foreach (PathNode neighbourNode in currentNode.neighbourList)
             {
+                if (neighbourNode == null)
+                {
+                    Debug.Log("null");
+                    continue;
+                }
                 if (closedList.Contains(neighbourNode))
                 {
                     continue;
@@ -96,53 +105,53 @@ public class PathFinding
         return null;
     }
 
-    public List<PathNode> GetNeighbourList(PathNode currentNode)
-    {
-        List<PathNode> neighbourList = new List<PathNode>();
+    // public List<PathNode> GetNeighbourList(PathNode currentNode)
+    // {
+    //     List<PathNode> neighbourList = new List<PathNode>();
 
-        if (currentNode.x >= 1)
-        {
-            //Left
-            neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y));
-            //DownLeft
-            if (currentNode.y >= 1)
-            {
-                neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y - 1));
-            }
-            //UpLeft
-            if (currentNode.y < grid.GetHeight() - 1)
-            {
-                neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y + 1));
-            }
-        }
-        if (currentNode.x < grid.GetWidth() - 1)
-        {
-            //Right
-            neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y));
-            //DownRight
-            if (currentNode.y >= 1)
-            {
-                neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y - 1));
-            }
-            //UpRight
-            if (currentNode.y < grid.GetHeight() - 1)
-            {
-                neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y + 1));
-            }
-        }
-        //Up
-        if (currentNode.y < grid.GetHeight() - 1)
-        {
-            neighbourList.Add(grid.GetGridObject(currentNode.x, currentNode.y + 1));
-        }
-        //Down
-        if (currentNode.y >= 1)
-        {
-            neighbourList.Add(grid.GetGridObject(currentNode.x, currentNode.y - 1));
-        }
+    //     if (currentNode.x >= 1)
+    //     {
+    //         //Left
+    //         neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y));
+    //         //DownLeft
+    //         if (currentNode.y >= 1)
+    //         {
+    //             neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y - 1));
+    //         }
+    //         //UpLeft
+    //         if (currentNode.y < grid.GetHeight() - 1)
+    //         {
+    //             neighbourList.Add(grid.GetGridObject(currentNode.x - 1, currentNode.y + 1));
+    //         }
+    //     }
+    //     if (currentNode.x < grid.GetWidth() - 1)
+    //     {
+    //         //Right
+    //         neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y));
+    //         //DownRight
+    //         if (currentNode.y >= 1)
+    //         {
+    //             neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y - 1));
+    //         }
+    //         //UpRight
+    //         if (currentNode.y < grid.GetHeight() - 1)
+    //         {
+    //             neighbourList.Add(grid.GetGridObject(currentNode.x + 1, currentNode.y + 1));
+    //         }
+    //     }
+    //     //Up
+    //     if (currentNode.y < grid.GetHeight() - 1)
+    //     {
+    //         neighbourList.Add(grid.GetGridObject(currentNode.x, currentNode.y + 1));
+    //     }
+    //     //Down
+    //     if (currentNode.y >= 1)
+    //     {
+    //         neighbourList.Add(grid.GetGridObject(currentNode.x, currentNode.y - 1));
+    //     }
         
-        return neighbourList;
-    }
+    //     return neighbourList;
+    // }
 
     private List<PathNode> CalculatePath(PathNode endNode)
     {

@@ -39,7 +39,7 @@ public class Grid<TGridObject>
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
-                    debugGridArray[x, y] = CreateWorldText(gridArray[x, y]?.ToString(), GetCellPosition(x, y) + new Vector3 (cellSize, cellSize, 0) / 2, 15, Color.white, TextAnchor.MiddleCenter);
+                    //debugGridArray[x, y] = CreateWorldText(gridArray[x, y]?.ToString(), GetCellPosition(x, y) + new Vector3 (cellSize, cellSize, 0) / 2, 15, Color.white, TextAnchor.MiddleCenter);
                     Debug.DrawLine(GetCellPosition(x, y), GetCellPosition(x, y+1), Color.white, 100f);
                     Debug.DrawLine(GetCellPosition(x, y), GetCellPosition(x+1, y), Color.white, 100f);
                 }
