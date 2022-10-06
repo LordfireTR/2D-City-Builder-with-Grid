@@ -62,7 +62,7 @@ public class Grid<TGridObject>
         return textMesh;
     }
 
-    Vector3 GetCellPosition(int x, int y)
+    public Vector3 GetCellPosition(int x, int y)
     {
         return new Vector3 (x, y) * cellSize + originPosition;
     }
@@ -124,7 +124,14 @@ public class Grid<TGridObject>
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
-        return GetGridObject(x, y);
+        if (x < gridArray.GetLength(0) && y < gridArray.GetLength(1))
+        {
+            return GetGridObject(x, y);
+        }
+        else
+        {
+            return default(TGridObject);
+        }
     }
 
     public int GetWidth()

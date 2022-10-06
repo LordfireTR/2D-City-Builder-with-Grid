@@ -7,17 +7,17 @@ public class PathFinding
     const int MOVE_STRAIGHT_COST = 10;
     const int MOVE_DIAGONAL_COST = 14;
 
-    public static PathFinding instance { get; private set; }
+    public static PathFinding Instance { get; private set; }
 
-    Grid<PathNode> grid;
+    public Grid<PathNode> grid;
     List<PathNode> openList;
     List<PathNode> closedList;
 
-    public PathFinding(int width, int height, Vector3 originPosition)
+    public PathFinding(int width, int height, float cellSize, Vector3 originPosition)
     {
-        instance = this;
-        grid = new Grid<PathNode>(width, height, 5f, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
-
+        Instance = this;
+        grid = new Grid<PathNode>(width, height, cellSize, originPosition, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        
         for (int x = 0; x < grid.GetWidth(); x++)
         {
             for (int y = 0; y < grid.GetHeight(); y++)
@@ -32,6 +32,28 @@ public class PathFinding
     public Grid<PathNode> GetGrid()
     {
         return grid;
+    }
+
+    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)
+    {
+        grid.GetXY(startWorldPosition, out int startX, out int startY);
+        grid.GetXY(endWorldPosition, out int endX, out int endY);
+
+        List<PathNode> path = FindPath(startX, startY, endX, endY);
+        if (path == null)
+        {
+            return null;
+        }
+        else
+        {
+            List<Vector3> vectorPath = new List<Vector3>();
+
+            foreach (PathNode node in path)
+            {
+                vectorPath.Add(grid.GetCellPosition(node.x, node.y));
+            }
+            return vectorPath;
+        }
     }
 
     public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
