@@ -13,6 +13,14 @@ public class Grid<TGridObject>
     TextMesh[,] debugGridArray;
 
     bool showDebug = true;
+
+    public event EventHandler<OnGridValueChangedEventArgs> OnGridValueChanged;
+
+    public class OnGridValueChangedEventArgs : EventArgs 
+    {
+        public int x, y;
+
+    } 
         
     public Grid (int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject)
     {
@@ -98,6 +106,10 @@ public class Grid<TGridObject>
             {
                 debugGridArray[x, y].text = gridArray[x, y]?.ToString();
             }
+            if (OnGridValueChanged != null)
+            {
+                OnGridValueChanged(this, new OnGridValueChangedEventArgs { x = x, y = y });
+            }
         }
     }
 
@@ -142,5 +154,10 @@ public class Grid<TGridObject>
     public int GetHeight()
     {
         return gridArray.GetLength(1);
+    }
+
+    public float GetCellSize()
+    {
+        return cellSize;
     }
 }
