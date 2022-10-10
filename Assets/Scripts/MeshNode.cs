@@ -17,4 +17,14 @@ public class MeshNode
         this.x = x;
         this.y = y;
     }
+
+    public void SetNodeUV(Vector2[] newUV)
+    {
+        uv = newUV;
+    }
+
+    public Vector2[] GetNodeUV()
+    {
+        return uv;
+    }
 }

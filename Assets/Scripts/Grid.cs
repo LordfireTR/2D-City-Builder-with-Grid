@@ -79,6 +79,15 @@ public class Grid<TGridObject>
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+
+        if (x >= width)
+        {
+            x = -1;
+        }
+        if (y >= height)
+        {
+            y = -1;
+        }
     }
 
     // public void AddValue (int x, int y, int value)
@@ -117,7 +126,10 @@ public class Grid<TGridObject>
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
-        SetGridObject(x, y, value);
+        if (x >= 0 && y >= 0)
+        {
+            SetGridObject(x, y, value);
+        }
     }
 
     public TGridObject GetGridObject (int x, int y)
@@ -136,7 +148,7 @@ public class Grid<TGridObject>
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
-        if (x < gridArray.GetLength(0) && y < gridArray.GetLength(1))
+        if (x < gridArray.GetLength(0) && y < gridArray.GetLength(1) && x >= 0 && y >= 0)
         {
             return GetGridObject(x, y);
         }
